@@ -1,0 +1,47 @@
+
+name: CI
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    strategy: 
+      matrix:
+        run-config:
+          - { scheme: 'MacPlatformTest', destination: 'platform=macOS'}
+    
+    steps:
+    - name: Checkout Project
+      uses: actions/checkout@v1
+
+    - name: List Available Applications
+      run: ls /Applications
+
+    - name: Switch to Xcode 12
+      run: sudo xcode-select -s /Applications/Xcode_12.app
+
+    - name: Show Build Version
+      run: xcodebuild -version
+
+    - name: Show Build Settings
+      run: xcodebuild -showBuildSettings
+      
+    - name: Show Build SDK
+      run: xcodebuild -showsdks
+    
+    - name: Show Available Destinations
+      env:
+        scheme: ${{ matrix.run-config['scheme'] }}    
+      run: xcodebuild -scheme ${scheme} -showdestinations
+    
+    - name: Run Build
+      env:
+          SCHEME: ${{ matrix.run-config['scheme'] }}
+          DESTINATION: ${{ matrix.run-config['destination'] }}
+
+      run: ci-build.sh
