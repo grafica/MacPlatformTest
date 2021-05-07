@@ -44,4 +44,4 @@ jobs:
           SCHEME: ${{ matrix.run-config['scheme'] }}
           DESTINATION: ${{ matrix.run-config['destination'] }}
 
-      run: ci-build.sh
+      run: ./ci-build.sh
