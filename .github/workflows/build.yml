@@ -45,3 +45,6 @@ jobs:
           DESTINATION: ${{ matrix.run-config['destination'] }}
 
       run: ./ci-build.sh
+
+    - name: Run Binary
+      run: ./ci-run.sh
