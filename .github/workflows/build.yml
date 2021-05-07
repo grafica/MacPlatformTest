@@ -46,5 +46,8 @@ jobs:
 
       run: ./ci-build.sh
 
+    - name: Run sysctl
+      run: sysctl -a | grep cpu
+
     - name: Run Binary
       run: ./ci-run.sh
